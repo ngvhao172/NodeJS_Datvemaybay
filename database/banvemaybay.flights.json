@@ -1,0 +1,130 @@
+[{
+  "_id": {
+    "$oid": "64fb6a8d6ccdcc89689e5e84"
+  },
+  "departure_airport_id": "1",
+  "arrival_airport_id": "2",
+  "departure_datetime": "2023-09-10 09:00:00",
+  "arrival_datetime": "2023-09-10 11:00:00",
+  "economy_price": "1493000",
+  "business_price": "3253000",
+  "airline_id_data": "1",
+  "flight_id_data": "1"
+},
+{
+  "_id": {
+    "$oid": "64fb6a8d6ccdcc89689e5e85"
+  },
+  "flight_id": "2",
+  "airline_id": "2",
+  "departure_airport_id": "1",
+  "arrival_airport_id": "2",
+  "departure_datetime": "2023-09-11 10:00:00",
+  "arrival_datetime": "2023-09-11 12:00:00",
+  "economy_price": "969000",
+  "business_price": "2637000"
+},
+{
+  "_id": {
+    "$oid": "64fb6a8d6ccdcc89689e5e86"
+  },
+  "flight_id": "3",
+  "airline_id": "3",
+  "departure_airport_id": "1",
+  "arrival_airport_id": "2",
+  "departure_datetime": "2023-09-10 11:00:00",
+  "arrival_datetime": "2023-09-10 13:00:00",
+  "economy_price": "812000",
+  "business_price": "1925000"
+},
+{
+  "_id": {
+    "$oid": "64fb6a8d6ccdcc89689e5e87"
+  },
+  "flight_id": "4",
+  "airline_id": "4",
+  "departure_airport_id": "1",
+  "arrival_airport_id": "2",
+  "departure_datetime": "2023-09-10 12:00:00",
+  "arrival_datetime": "2023-09-10 14:00:00",
+  "economy_price": "1099000",
+  "business_price": "2617000"
+},
+{
+  "_id": {
+    "$oid": "64fb6a8d6ccdcc89689e5e88"
+  },
+  "flight_id": "5",
+  "airline_id": "5",
+  "departure_airport_id": "1",
+  "arrival_airport_id": "2",
+  "departure_datetime": "2023-09-10 13:00:00",
+  "arrival_datetime": "2023-09-10 20:20:00",
+  "economy_price": "973000",
+  "business_price": "2297000"
+},
+{
+  "_id": {
+    "$oid": "64fb6a8d6ccdcc89689e5e89"
+  },
+  "flight_id": "6",
+  "airline_id": "5",
+  "departure_airport_id": "1",
+  "arrival_airport_id": "2",
+  "departure_datetime": "2023-09-10 13:00:00",
+  "arrival_datetime": "2023-09-10 20:20:00",
+  "economy_price": "842000",
+  "business_price": "2183000"
+},
+{
+  "_id": {
+    "$oid": "64fb6a8d6ccdcc89689e5e8a"
+  },
+  "flight_id": "7",
+  "airline_id": "3",
+  "departure_airport_id": "1",
+  "arrival_airport_id": "2",
+  "departure_datetime": "2023-09-10 13:00:00",
+  "arrival_datetime": "2023-09-10 20:20:00",
+  "economy_price": "1008000",
+  "business_price": "2299000"
+},
+{
+  "_id": {
+    "$oid": "64fb6a8d6ccdcc89689e5e8b"
+  },
+  "flight_id": "8",
+  "airline_id": "3",
+  "departure_airport_id": "1",
+  "arrival_airport_id": "2",
+  "departure_datetime": "2023-09-10 11:00:00",
+  "arrival_datetime": "2023-09-10 13:00:00",
+  "economy_price": "822000",
+  "business_price": "2130000"
+},
+{
+  "_id": {
+    "$oid": "64fb6a8d6ccdcc89689e5e8c"
+  },
+  "flight_id": "9",
+  "airline_id": "4",
+  "departure_airport_id": "1",
+  "arrival_airport_id": "2",
+  "departure_datetime": "2023-09-10 12:00:00",
+  "arrival_datetime": "2023-09-10 14:00:00",
+  "economy_price": "1181000",
+  "business_price": "2483000"
+},
+{
+  "_id": {
+    "$oid": "64fb6a8d6ccdcc89689e5e8d"
+  },
+  "flight_id": "10",
+  "airline_id": "5",
+  "departure_airport_id": "1",
+  "arrival_airport_id": "2",
+  "departure_datetime": "2023-09-10 13:00:00",
+  "arrival_datetime": "2023-09-10 15:00:00",
+  "economy_price": "995000",
+  "business_price": "2230000"
+}]

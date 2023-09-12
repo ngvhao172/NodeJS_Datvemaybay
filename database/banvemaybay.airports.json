@@ -1,0 +1,45 @@
+[{
+  "_id": {
+    "$oid": "64fb585f6ccdcc89689e5e7e"
+  },
+  "airport_name": "Noi Bai International Airport",
+  "airport_location": "Hanoi, Vietnam",
+  "airport_code": "HAN",
+  "airport_id_data": "1"
+},
+{
+  "_id": {
+    "$oid": "64fb585f6ccdcc89689e5e7f"
+  },
+  "airport_name": "Tan Son Nhat International Airport",
+  "airport_location": "Ho Chi Minh City, Vietnam",
+  "airport_code": "SGN",
+  "airport_id_data": "2"
+},
+{
+  "_id": {
+    "$oid": "64fb585f6ccdcc89689e5e80"
+  },
+  "airport_name": "Da Nang International Airport",
+  "airport_location": "Da Nang, Vietnam",
+  "airport_code": "DAD",
+  "airport_id_data": "3"
+},
+{
+  "_id": {
+    "$oid": "64fb585f6ccdcc89689e5e81"
+  },
+  "airport_name": "Cam Ranh International Airport",
+  "airport_location": "Khanh Hoa, Vietnam",
+  "airport_code": "CXR",
+  "airport_id_data": "4"
+},
+{
+  "_id": {
+    "$oid": "64fb585f6ccdcc89689e5e82"
+  },
+  "airport_name": "Phu Bai International Airport",
+  "airport_location": "Hue, Vietnam",
+  "airport_code": "HUI",
+  "airport_id_data": "5"
+}]

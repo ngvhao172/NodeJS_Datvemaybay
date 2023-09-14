@@ -8,8 +8,8 @@
   "arrival_datetime": "2023-09-10 11:00:00",
   "economy_price": "1493000",
   "business_price": "3253000",
-  "airline_id_data": "1",
-  "flight_id_data": "1"
+  "airline_id": "1",
+  "flight_id": "1"
 },
 {
   "_id": {

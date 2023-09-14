@@ -3,7 +3,7 @@
     "$oid": "64fd93da5961a7ceae476b88"
   },
   "airline_name": "Vietnam Airlines",
-  "airline_logo": "../../images/VietnamAirlinesLogo.png",
+  "airline_logo": "./img/airlines/VietnamAirlinesLogo.png",
   "airline_id_data": "1"
 },
 {
@@ -11,7 +11,7 @@
     "$oid": "64fd93da5961a7ceae476b89"
   },
   "airline_name": "Jetstar Pacific",
-  "airline_logo": "../../images/JetStarLogo.png",
+  "airline_logo": "./img/airlines/JetStarLogo.png",
   "airline_id_data": "2"
 },
 {
@@ -19,7 +19,7 @@
     "$oid": "64fd93da5961a7ceae476b8a"
   },
   "airline_name": "VietJet Air",
-  "airline_logo": "../../images/VietjetAirLogo.png",
+  "airline_logo": "./img/airlines/VietjetAirLogo.png",
   "airline_id_data": "3"
 },
 {
@@ -27,7 +27,7 @@
     "$oid": "64fd93da5961a7ceae476b8b"
   },
   "airline_name": "Bamboo Airways",
-  "airline_logo": "../../images/BambooAirwaysLogo.png",
+  "airline_logo": "./img/airlines/BambooAirwaysLogo.png",
   "airline_id_data": "4"
 },
 {
@@ -35,6 +35,6 @@
     "$oid": "64fd93da5961a7ceae476b8c"
   },
   "airline_name": "Pacific Airlines",
-  "airline_logo": "../../images/PacificAirlinesLogo.png",
+  "airline_logo": "./img/airlines/PacificAirlinesLogo.png",
   "airline_id_data": "5"
 }]

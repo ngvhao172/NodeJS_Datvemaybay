@@ -4,16 +4,19 @@ const app = express()
 // Connect to Database
 const db = require('./config/db');
 db.connect();
-
 const port = 3000;
+const customHelpers = require('./util/customHelpers');
 app.engine('hbs', hbs({
     defaultLayout: 'main',
-    extname: '.hbs'
+    extname: '.hbs',
+    helpers: {
+        ...customHelpers.helpers
+    }
 }))
 app.set('view engine', 'hbs')
 app.set('views', './views');
 app.use(express.static(__dirname + '/public'));
-app.use('/flight', express.static(__dirname + '/public'));
+app.use('/select-flight', express.static(__dirname + '/public'));
 app.use(
     express.urlencoded({
         extended: true,

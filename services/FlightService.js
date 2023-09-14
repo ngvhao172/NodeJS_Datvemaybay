@@ -12,13 +12,11 @@ class FlightService {
   }
   getFlightsBySearch = (req, res, next) => {
     const startDate = req.body.departure_datetime;
-    console.log(startDate)
     return flight.find({
       departure_airport_id: req.body.departure_airport_id,
       arrival_airport_id: req.body.arrival_airport_id,
     })
       .then((flights) => {
-        console.log(flights)
         const formattedFlights = flights.map((flight) => {
           const departureDatetimeFormatted = convertTimetoAsiaHCM(flight.departure_datetime);
           const arrivalDatetimeFormatted = convertTimetoAsiaHCM(flight.arrival_datetime);
@@ -28,7 +26,6 @@ class FlightService {
             arrival_datetime: arrivalDatetimeFormatted,
           };
         });
-        console.log(formattedFlights);
         const resultFlights = formattedFlights.filter((flight) => {
           const flightDepartureDate = flight.departure_datetime;
           if (flightDepartureDate.includes(startDate)) {

@@ -1,39 +1,46 @@
 const flightServices = require('../services/FlightService')
 const airlineService = require('../services/AirlineService');
-const { getAirportById } = require('./AirportController');
+const airportService = require('../services/AirportService');
 
 class FlightController {
-    // index(req, res, next) {
-    //     // res.status(200).json({message:"ok"});
-    //     // res.end();
-    //     res.send("ok");
-    // }
-    // show(req, res, next) {
-    //     // res.status(200).json({message:"ok"});
-    //     // res.end();
-    //     res.send("flight detail!!");
-    // }
     async getFlightsBySearch(req, res, next) {
         try {
-            const flights = await flightServices.getFlightsBySearch(req,res,next);
+            const airportDeparture = await airportService.getAirportById(req.body.departure_airport_id);
+            const airportArrival = await airportService.getAirportById(req.body.arrival_airport_id);
+            const flights = await flightServices.getFlightsBySearch(req, res, next);
+
+            for (const flight of flights) {
+                const airline = await airlineService.getAirlineById(flight.airline_id);
+                flight.airlineInfo = airline;
+                flight.from = airportDeparture;
+                flight.to = airportArrival;
+            }
             const airlines = await airlineService.getAllAirlines(req,res,next);
-            // res.json(flights);
-            console.log(req.body.departure_airport_id)
-            const airportDeparture = await getAirportById(req.body.departure_airport_id);
-            const airportArrival = await getAirportById(req.body.arrival_airport_id);
-            console.log(airportDeparture);
-            console.log(airportArrival);
+           
             const formData = req.body;
             formData.from = airportDeparture;
             formData.to = airportArrival;
-            // res.status(200).json(airports);//api
-            // return multipleMongooseToObject(airports);
-            console.log(req.body); 
-            res.render('flights-listing', {formData: formData, flights: flights, airlines: airlines});
+            res.render('pages/flights-listing', {formData: formData, flights: flights, airlines: airlines});
         } catch (error) {
             console.error(error);
             throw error; 
         }
+    };
+    showSeats(req, res, next) {
+        res.render('pages/booking-seat',{flightData: JSON.parse(req.body.flightData), class: JSON.parse(req.body.inputData).class});
+    }
+    showDetailFlightBooking(req,res,next){
+        const seat = req.body.seat;
+        const classPricing = req.body.class;
+        const flightData = JSON.parse(req.body.flightData);
+        flightData.classValue = String(classPricing);
+        if (classPricing == "Phổ Thông"){
+            flightData.classPricing = flightData.economy_price;
+        }   
+        else{
+            flightData.classPricing = flightData.business_price;
+        }   
+        res.render('pages/flight-booking-detail', {flightData: flightData, seatNo: seat});
     }
 }
 

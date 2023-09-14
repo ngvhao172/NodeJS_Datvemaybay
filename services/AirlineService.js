@@ -1,5 +1,6 @@
 const airline = require('../models/Airline');
 const {multipleMongooseToObject} = require('../util/mongoose');
+const {mongooseToObject} = require('../util/mongoose')
 class AirlineService {
     getAllAirlines = () => {
         return airline.find({})
@@ -10,15 +11,11 @@ class AirlineService {
                 throw error;
             });
     }
-    getAirlineById = async (req,res,next) => {
+    getAirlineById = async (id) => {
         try {
-          const airportDatas = await airline.findOne({airline_id_data: "1"});
+          const airlineDatas = await airline.findOne({airline_id_data: id});
       
-          // if (!airportData) {
-          //   return null; 
-          // }
-      
-          return mongooseToObject(airportDatas);
+          return mongooseToObject(airlineDatas);
         } catch (error) {
           // console.error(`Error fetching airport by ID: ${error.message}`);
           // throw error; // Rethrow the error or handle it based on your application's needs

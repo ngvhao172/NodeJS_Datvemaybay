@@ -12,13 +12,8 @@ class AirportService {
             });
     }
     getAirportById = async (id) => {
-        console.log(id);
         try {
           const airportDatas = await airport.findOne({airport_id_data: id});
-      
-          // if (!airportData) {
-          //   return null; 
-          // }
       
           return mongooseToObject(airportDatas);
         } catch (error) {

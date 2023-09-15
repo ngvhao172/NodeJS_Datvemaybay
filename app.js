@@ -1,5 +1,6 @@
 const express = require('express')
 const hbs = require('express-handlebars').engine;
+const session = require('express-session');
 const app = express()
 // Connect to Database
 const db = require('./config/db');
@@ -23,6 +24,15 @@ app.use(
     }),
 );
 app.use(express.json());
+// session initialization
+app.use(session({
+    secret: 'mysecretkey', 
+    resave: false,        
+    saveUninitialized: false,
+    cookie: {
+        secure: false,
+    }
+}));
 
 // init Route middle
 const initRoute = require('./routes');

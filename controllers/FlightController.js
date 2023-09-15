@@ -20,14 +20,21 @@ class FlightController {
             const formData = req.body;
             formData.from = airportDeparture;
             formData.to = airportArrival;
-            res.render('pages/flights-listing', {formData: formData, flights: flights, airlines: airlines});
+            if(req.session.user){
+                const user = JSON.parse(req.session.user);
+                res.render('pages/client/flights-listing', {formData: formData, flights: flights, airlines: airlines, user});
+              }
+            else{
+                res.render('pages/client/flights-listing', {formData: formData, flights: flights, airlines: airlines});
+            }
+           
         } catch (error) {
             console.error(error);
             throw error; 
         }
     };
     showSeats(req, res, next) {
-        res.render('pages/booking-seat',{flightData: JSON.parse(req.body.flightData), class: JSON.parse(req.body.inputData).class});
+        res.render('pages/client/booking-seat',{flightData: JSON.parse(req.body.flightData), class: JSON.parse(req.body.inputData).class});
     }
     showDetailFlightBooking(req,res,next){
         const seat = req.body.seat;
@@ -40,7 +47,7 @@ class FlightController {
         else{
             flightData.classPricing = flightData.business_price;
         }   
-        res.render('pages/flight-booking-detail', {flightData: flightData, seatNo: seat});
+        res.render('pages/client/flight-booking-detail', {flightData: flightData, seatNo: seat});
     }
 }
 

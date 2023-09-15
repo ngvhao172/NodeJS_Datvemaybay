@@ -4,9 +4,10 @@ const flightController = require('../controllers/FlightController');
 const airportService = require('../services/AirportService');
 const airlineService = require('../services/AirlineService');
 
-// route.get('/', flightController.index);
 route.post('/booking-seat', flightController.showSeats);
+
 route.post('/flight-detail-booking', flightController.showDetailFlightBooking);
+
 route.post('/', flightController.getFlightsBySearch);
 
 // route.get('/airline/:id', (req, res) => {

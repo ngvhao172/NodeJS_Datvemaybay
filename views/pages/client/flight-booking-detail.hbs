@@ -12,7 +12,7 @@
                       <br>
                        -- 
                        <br>
-                      {{flightData.to.airport_name}}_{{flightData.to.airport_name}}
+                      {{flightData.to.airport_location}}_{{flightData.to.airport_name}}
                     <br>SeatNo: {{seatNo}}, FlightNo: VN{{flightData.flight_id}}, Airbus: A{{flightData.flight_id}}    
                 </div>
             </div>
@@ -22,7 +22,7 @@
                 <div class="row">
                     <div class="col">
                         <span class="fw-bold fs-2 p-0 text-end" style="color:#ff8682">
-                            777.777 đ
+                            {{formatCurrency flightData.classPricing}}
                         </span>
                     </div>
                 </div>

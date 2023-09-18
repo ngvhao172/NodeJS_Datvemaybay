@@ -1,7 +1,11 @@
 const express = require('express')
+const app = express()
 const hbs = require('express-handlebars').engine;
 const session = require('express-session');
-const app = express()
+const flash = require('express-flash');
+const passport = require('passport');
+const initializePassport  = require('./services/PassportService');
+
 // Connect to Database
 const db = require('./config/db');
 db.connect();
@@ -23,8 +27,6 @@ app.use(
         extended: true,
     }),
 );
-app.use(express.json());
-// session initialization
 app.use(session({
     secret: 'mysecretkey', 
     resave: false,        
@@ -33,6 +35,14 @@ app.use(session({
         secure: false,
     }
 }));
+app.use(express.json());
+app.use(flash());
+app.use(passport.initialize()) 
+app.use(passport.session())
+// innitalizepassport config
+initializePassport;
+
+
 
 // init Route middle
 const initRoute = require('./routes');

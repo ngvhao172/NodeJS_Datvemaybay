@@ -1,6 +1,7 @@
 const flightServices = require('../services/FlightService')
 const airlineService = require('../services/AirlineService');
 const airportService = require('../services/AirportService');
+const {mongooseToObject} = require('../util/mongoose');
 
 class FlightController {
     async getFlightsBySearch(req, res, next) {
@@ -20,23 +21,20 @@ class FlightController {
             const formData = req.body;
             formData.from = airportDeparture;
             formData.to = airportArrival;
-            if(req.session.user){
-                const user = JSON.parse(req.session.user);
-                res.render('pages/client/flights-listing', {formData: formData, flights: flights, airlines: airlines, user});
-              }
-            else{
-                res.render('pages/client/flights-listing', {formData: formData, flights: flights, airlines: airlines});
-            }
+
+            const user = await req.user;
+            res.render('pages/client/flights-listing', {formData: formData, flights: flights, airlines: airlines, user: mongooseToObject(user)});
            
         } catch (error) {
             console.error(error);
             throw error; 
         }
     };
-    showSeats(req, res, next) {
-        res.render('pages/client/booking-seat',{flightData: JSON.parse(req.body.flightData), class: JSON.parse(req.body.inputData).class});
+    async showSeats(req, res, next) {
+        const user = await req.user;
+        res.render('pages/client/booking-seat',{flightData: JSON.parse(req.body.flightData), class: JSON.parse(req.body.inputData).class, user: mongooseToObject(user)});
     }
-    showDetailFlightBooking(req,res,next){
+    async showDetailFlightBooking(req,res,next){
         const seat = req.body.seat;
         const classPricing = req.body.class;
         const flightData = JSON.parse(req.body.flightData);
@@ -47,7 +45,8 @@ class FlightController {
         else{
             flightData.classPricing = flightData.business_price;
         }   
-        res.render('pages/client/flight-booking-detail', {flightData: flightData, seatNo: seat});
+        const user = await req.user;
+        res.render('pages/client/flight-booking-detail', {flightData: flightData, seatNo: seat, user: mongooseToObject(user)});
     }
 }
 

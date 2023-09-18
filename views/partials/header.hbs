@@ -1,14 +1,11 @@
 <nav class="navbar navbar-expand-lg bg-white fixed-top">
-    <div class="container-fluid text-center fix-navbar">
-
-        <div class="col-lg-4 navbar d-none d-lg-inline-block d-xl-inline-block pb-0 ms-5">
-            <ul class="nav" id="navBarUnderline">
-                <li class="nav-item me-4">
-                    <a class="nav-link active icon" aria-current="page" href="#search-info">Chuyến bay</a>
-                </li>
-                <a class="nav-link" href="./client/pages/search-tc-code/search-tc-code.php" target="blank"><i
-                        class="fa-solid fa-magnifying-glass"></i> Tra cứu</a>
-            </ul>
+    <div class="container text-center fix-navbar">
+        <div class="col-lg-4 navbar d-none d-lg-inline-block d-xl-inline-block pb-0">
+            <div class="d-flex">
+                <a class="nav-link active icon text-black me-5" aria-current="page" href="#search-info"> <i class="fa fa-plane" aria-hidden="true"></i> Chuyến bay</a>
+                <a class="nav-link text-black" href="#" target="blank"><i class="fa-solid fa-magnifying-glass"></i> Tra cứu</a>
+            </div>
+                
         </div>
 
         <div class="col-lg-2 col-md-4 d-flex justify-content-center text-center align-content-center">
@@ -16,14 +13,14 @@
                     alt="Logo"></a>
         </div>
 
-        <div class="col-lg-4 col-md-8 justify-content-end d-flex me-lg-5">
+        <div class="col-lg-4 col-md-8 justify-content-end d-flex ">
             <!-- <button class="navbar-toggler d-lg-none mb-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
                                         <span class="navbar-toggler-icon"></span>
                                     </button> -->
             <a class="login nav-link ps-2 me-3 fs-6 ps-4 pe-4" style="padding: 8px;border-radius: 6px;"
                 aria-current="page" href="./login">Login</a>
             <a class="nav-link active ps-2 text-bg-dark fs-6 ps-4 pe-4" style="padding: 8px;border-radius: 6px;"
-                href="#">Sign up</a>
+                href="/register">Sign up</a>
         </div>
     </div>
 </nav>

@@ -59,10 +59,10 @@
                                 style="font-weight: 400; font-size: 16px; line-height: 20px; opacity: 0.75; margin-bottom: 48px;">
                                 Login to access your StarLine account
                             </p>
-                            {{#if error}}
+                            {{#if messages.error}}
                             <div class="alert alert-danger alert-dismissible">
                                 <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                                <strong>Failed!</strong> {{error}}
+                                <strong>Failed!</strong> {{messages.error}}
                             </div>
                             {{/if}}
 

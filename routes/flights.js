@@ -1,14 +1,13 @@
 const express = require('express');
 const route = express.Router();
 const flightController = require('../controllers/FlightController');
-const airportService = require('../services/AirportService');
-const airlineService = require('../services/AirlineService');
+const authenticationController = require('../controllers/AuthenticationController');
 
-route.post('/booking-seat', flightController.showSeats);
+route.post('/booking-seat', authenticationController.checkNotAuthenticated, flightController.showSeats);
 
-route.post('/flight-detail-booking', flightController.showDetailFlightBooking);
+route.post('/flight-detail-booking',authenticationController.checkNotAuthenticated, flightController.showDetailFlightBooking);
 
-route.post('/', flightController.getFlightsBySearch);
+route.post('/', authenticationController.checkNotAuthenticated, flightController.getFlightsBySearch);
 
 // route.get('/airline/:id', (req, res) => {
 //   const airportId = req.params.id;

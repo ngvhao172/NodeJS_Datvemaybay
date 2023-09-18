@@ -1,9 +1,9 @@
-const user = require('../models/User');
+const User = require('../models/User');
 const {multipleMongooseToObject} = require('../util/mongoose');
 const {mongooseToObject} = require('../util/mongoose');
 class UserService{
     getAllUser(){
-        return user.find({})
+        return User.find({})
             .then((users) => {
                 return multipleMongooseToObject(users);
             })
@@ -12,7 +12,7 @@ class UserService{
             });
     }
     getUserById(id){
-        return user.findById(id)
+        return User.findById(id)
            .then((user) => {
                 return mongooseToObject(user);
             })
@@ -20,20 +20,19 @@ class UserService{
                 throw error;
             });
     }
-    loginAccount(email, password){
-        return user.findOne({email: email, password: password})
-          .then((user) => {
-            if(user){
-                return mongooseToObject(user);
-            }
-            else{
-                throw new Error('Không tìm thấy người dùng.');
-            }  
-            })
-          .catch((error) => {
-                throw error;
-            });
-    }
+    createUser(email, last_name, first_name, password, phonenumber, address, dob) {
+        const newUser = new User({ email, last_name, first_name, password, phonenumber, address, dob });
+      
+        return newUser.save()
+          .then(() => {
+            console.log('Người dùng đã được lưu vào cơ sở dữ liệu.');
+          })
+          .catch((err) => {
+            console.error('Lỗi khi lưu người dùng:', err);
+            throw err;
+          });
+      }
+      
 }
 
 module.exports = new UserService;

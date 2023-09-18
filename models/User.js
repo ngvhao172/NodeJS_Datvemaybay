@@ -7,11 +7,10 @@ const User = new Schema({
     first_name: String,
     password: String,
     google_id: String,
-    code: Number,
     phonenumber: String,
     address: String,
     dob: Date,
-    role: Number
+    verified: Boolean
 });
 
 module.exports = mongoose.model('User', User);

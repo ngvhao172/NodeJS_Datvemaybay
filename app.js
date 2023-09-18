@@ -5,11 +5,12 @@ const session = require('express-session');
 const flash = require('express-flash');
 const passport = require('passport');
 const initializePassport  = require('./services/PassportService');
+require('dotenv').config({path: './config/.env'});
 
 // Connect to Database
 const db = require('./config/db');
 db.connect();
-const port = 3000;
+const port = process.env.PORT;
 const customHelpers = require('./util/customHelpers');
 app.engine('hbs', hbs({
     defaultLayout: 'main',

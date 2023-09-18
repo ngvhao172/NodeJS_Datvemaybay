@@ -1,4 +1,5 @@
 const User = require('../models/User');
+const userVerificationService = require('./UserVerificationService');
 const {multipleMongooseToObject} = require('../util/mongoose');
 const {mongooseToObject} = require('../util/mongoose');
 class UserService{
@@ -20,18 +21,28 @@ class UserService{
                 throw error;
             });
     }
-    createUser(email, last_name, first_name, password, phonenumber, address, dob) {
-        const newUser = new User({ email, last_name, first_name, password, phonenumber, address, dob });
+    createUser(email, last_name, first_name, password, phonenumber, address, dob, res) {
+        const newUser = new User({ email, last_name, first_name, password, phonenumber, address, dob, verified: false });
       
         return newUser.save()
-          .then(() => {
-            console.log('Người dùng đã được lưu vào cơ sở dữ liệu.');
+          .then((result) => {
+            //success => sending mail
+            userVerificationService.sendVerificationEmail(result, res)
           })
           .catch((err) => {
             console.error('Lỗi khi lưu người dùng:', err);
             throw err;
           });
-      }
+    }
+    updateUserStatus(userID){
+        User.updateOne({_id: userID, verified: true})
+        .then((user)=>{
+            return mongooseToObject(user);
+        })
+        .catch((error)=>{
+            console.log(error);
+        })
+    }
       
 }
 

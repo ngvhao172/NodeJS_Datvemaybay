@@ -18,6 +18,8 @@ route.post('/register', authenticationController.registerNewUser);
 
 route.post('/logout', authenticationController.logout);
 
+route.get("/verify/:userID/:uniqueString", authenticationController.verifyUser);
+
 route.get('/', siteController.index);
 
 

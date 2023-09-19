@@ -4,7 +4,12 @@ const hbs = require('express-handlebars').engine;
 const session = require('express-session');
 const flash = require('express-flash');
 const passport = require('passport');
-const initializePassport  = require('./services/PassportService');
+// config passport
+const initializeGooglePassport = require('./config/oauth2');
+const initializePassport = require('./config/passport-config');
+// config gg passport
+
+
 require('dotenv').config({path: './config/.env'});
 
 // Connect to Database
@@ -40,8 +45,14 @@ app.use(express.json());
 app.use(flash());
 app.use(passport.initialize()) 
 app.use(passport.session())
-// innitalizepassport config
-initializePassport;
+
+// init Google passport
+initializeGooglePassport(passport);
+
+
+// // innitalizepassport config
+initializePassport(passport);
+
 
 
 

@@ -12,6 +12,15 @@ class UserService{
                 throw error;
             });
     }
+    getUserByEmail(email){
+        return User.findOne({email})
+          .then((user) => {
+                return mongooseToObject(user);
+            })
+          .catch((error) => {
+                throw error;
+            });
+    }
     getUserById(id){
         return User.findById(id)
            .then((user) => {
@@ -34,8 +43,19 @@ class UserService{
             throw err;
           });
     }
-    updateUserStatus(userID){
-        User.updateOne({_id: userID, verified: true})
+    createUserGG(newUser){
+        const newUser1 = new User(newUser);
+        return newUser1.save()
+         .then((result) => {
+            return mongooseToObject(result);
+          })
+         .catch((err) => {
+            console.error('Lỗi khi lưu người dùng:', err);
+            throw err;
+          });
+    }
+    async updateUserStatus(userID){
+        return await User.findByIdAndUpdate(userID, { verified: true }, { new: true })
         .then((user)=>{
             return mongooseToObject(user);
         })

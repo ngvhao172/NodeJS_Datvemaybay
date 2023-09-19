@@ -5,8 +5,8 @@ const userVerification = require('../models/UserVerification');
 const {mongooseToObject} = require('../util/mongoose')
 
 class UserVerificationService{
-    findByUserId(userID){
-        userVerification.findOne({userID})
+    async findByUserId(userID){
+        return await userVerification.findOne({userID})
         .then((result)=>{
             return mongooseToObject(result);
         })
@@ -14,17 +14,18 @@ class UserVerificationService{
             console.log(error);
         })
     }
-    delUserVerification(userID){
+    async delUserVerification(userID, res){
         userVerification.deleteOne({userID})
         .then(()=>{
-            res.json({status: 200, message: "Deleted UserVerification successful"});
+            // res.json({status: 200, message: "Deleted UserVerification successful"});
+            console.log("Deleted userVerification successful")
         })
         .catch((error)=>{
             console.log(error);
         })
     }
     
-    // sending mail 
+    // sending mail using nodemailer
     
     sendVerificationEmail = ({_id, email}, res) => {
         const transporter = nodemailer.createTransport({
@@ -40,8 +41,8 @@ class UserVerificationService{
         const mailOptions = {
             from: process.env.AUTH_EMAIL,
             to: email,
-            subject: "Verify Your Email",
-            html: `<p>Verify your email address to complete the signup and login into your account </p>. 
+            subject: "[Tanka Travel] Verify Your Email",
+            html: `<p>Verify your email address to complete the signup and login into your account.</p>
             <p>Press <a href=${currentUrl + "/verify/" + _id + "/" + uniqueString}> here </a> to proceed. </p>`
         }
         // hashed uniqueString
@@ -60,10 +61,14 @@ class UserVerificationService{
                     transporter.sendMail(mailOptions)
                     .then(()=>{
                         console.log(`Verification mail has been sent to ${mailOptions.to}`);
-                        res.json({
-                            status: "Pending",
-                            message: "Verification mail has been sent"
-                        })
+                        // res.json({
+                        //     status: "Pending",
+                        //     message: "Verification mail has been sent"
+                        // })
+                        res.render('pages/authentication/login', {
+                            layout: null,
+                            success: "An email has been sent into your email address. Please verify before login."
+                        });                        
                     })
                     .catch((error)=>{
                         console.log(error)

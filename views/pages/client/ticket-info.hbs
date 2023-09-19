@@ -89,7 +89,12 @@
                                         </div> -->
                                     <div class="col-12 col-md-8 col-sm-6 text-start">
                                         <h3>
-                                            {{passengerInfo.firstName}} {{passengerInfo.lastName}}
+                                            {{#if passengerInfo}}
+                                                {{passengerInfo.firstName}} {{passengerInfo.lastName}}
+                                                {{else}}
+                                                    {{user.first_name}} {{user.last_name}}
+                                            {{/if}}
+
                                         </h3>
                                         <!-- <span>Boarding Pass N’123</span> -->
 
@@ -158,7 +163,11 @@
                                     <div class="col ms-1">
                                         <div class="seat-info fw-bold" style="opacity: 0.6;">Seat</div>
                                         <div id="seatnum">
-                                            {{passengerInfo.seatNo}}
+                                            {{#if passengerInfo}}
+                                                {{passengerInfo.seatNo}}
+                                                {{else}}
+                                                      {{flightData.seatNo}}
+                                            {{/if}}
                                         </div>
                                     </div>
                                 </div>

@@ -1,6 +1,8 @@
 <!-- body -->
 <div class="container mt-5 pt-5">
-    <form action="" method="">
+    <form id="formBookNow" action="" method="post">
+        <input type="hidden" name="flightData" value="{{JSONStringify flightData}}">
+        <input type="hidden" name="seatNo" value="{{JSONStringify seatNo}}">
         <div class="row mb-3">
             <!-- col left -->
             <div class="col-12 col-sm-12 col-md-12 col-lg-6 mb-3">
@@ -8,12 +10,12 @@
                     {{flightData.airlineInfo.airline_name}}
                 </h1>
                 <div class="fs-5">
-                      {{flightData.from.airport_location}}_{{flightData.from.airport_name}}
-                      <br>
-                       -- 
-                       <br>
-                      {{flightData.to.airport_location}}_{{flightData.to.airport_name}}
-                    <br>SeatNo: {{seatNo}}, FlightNo: VN{{flightData.flight_id}}, Airbus: A{{flightData.flight_id}}    
+                    {{flightData.from.airport_location}}_{{flightData.from.airport_name}}
+                    <br>
+                    --
+                    <br>
+                    {{flightData.to.airport_location}}_{{flightData.to.airport_name}}
+                    <br>SeatNo: {{seatNo}}, FlightNo: VN{{flightData.flight_id}}, Airbus: A{{flightData.flight_id}}
                 </div>
             </div>
 
@@ -28,7 +30,7 @@
                 </div>
                 <div class="row justify-content-end">
                     <div class="col-12 col-lg-6">
-                        <button type="button" class="btn btn-outline-success fw-bold p-2 fs-4"
+                        <button type="button" id="bookFlight" class="btn btn-outline-success fw-bold p-2 fs-4"
                             name="booknow" data-bs-toggle="modal" data-bs-target="#exampleModal" style="
                                     background-color:#8DD3BB; 
                                     border: #8DD3BB; 
@@ -49,11 +51,10 @@
                     <div class="row">
                         <!-- <form action="../booking-dt/booking-dt.php" method="POST" class="needs-validation" novalidate> -->
                         <div class="col">
-                            <form action="../passenger" method="POST"
-                                class="needs-validation">
+                            <form action="../passenger" method="POST" class="needs-validation">
                                 {{!-- node js --}}
                                 <input type="hidden" name="flightData" value="{{JSONStringify flightData}}">
-                                 <input type="hidden" name="seatNo" value="{{JSONStringify seatNo}}">
+                                <input type="hidden" name="seatNo" value="{{JSONStringify seatNo}}">
                                 <div class="modal-header border-bottom-0">
                                     <div class="container">
                                         <div class="row">
@@ -127,8 +128,7 @@
                                         <div class="row"></div>
                                         <div class="col mb-2">
                                             <!-- <form action="../booking-dt/booking-dt.php" method="post"> -->
-                                            <button type="submit" id=""
-                                                class="btn btn-outline-success p-2"
+                                            <button type="submit" id="" class="btn btn-outline-success p-2"
                                                 style="background-color:#8DD3BB; border: #8DD3BB; color: black;width: 100%;">Lưu
                                                 thông tin</button>
                                             <!-- <script src="functions.js"></script> -->
@@ -150,128 +150,14 @@
     </div>
     </form>
     <!-- Modal Dialog -->
-                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered">
-                        <div class="modal-content pb-3" style="border-radius: 10px;">
-                            <div class="container">
-                                <div class="row">
-                                    <!-- <form action="../booking-dt/booking-dt.php" method="POST" class="needs-validation" novalidate> -->
-                                    <div class="col">
-                                        <form action="../booking-dt/personal-info-verify.php" method="POST" class="needs-validation">
-                                        <input type="hidden" name="airline_name" value="<?php echo $_SESSION['airline_name'] ?>">
-                                        <input type="hidden" name="price" value="<?php echo $_SESSION['price'] ?>">
-                                        <input type="hidden" name="class" value="<?php echo $_SESSION['class'] ?>">
-                                        <input type="hidden" name="fromDate" value="<?php echo $_SESSION['fromDate'] ?>">
-                                        <input type="hidden" name="toDate" value="<?php echo $_SESSION['toDate'] ?>">
-                                        <input type="hidden" name="time_depart" value="<?php echo $_SESSION['time_depart'] ?>">
-                                        <input type="hidden" name="time_arri" value="<?php echo $_SESSION['time_arri'] ?>">
-                                        <input type="hidden" name="time_estimate" value="<?php echo $_SESSION['time_estimate'] ?>">
-                                        <input type="hidden" name="from_location" value="<?php echo $_SESSION['from_location'] ?>">
-                                        <input type="hidden" name="to_location" value="<?php echo $_SESSION['to_location'] ?>">
-                                        <input type="hidden" name="airline_logo" value="<?php echo $_SESSION['airline_logo'] ?>">
-                                        <input type="hidden" name="flight_id" value="<?php echo $_SESSION['flight_id'] ?>">
-                                         <!-- Phát -->
-                                         <input type="hidden" name="seat" value="<?php echo $_SESSION['seat'] ?>">
-                                        <input type="hidden" name="seat_id" value="<?php echo $_SESSION['seat_id'] ?>">
-                                            <div class="modal-header border-bottom-0">
-                                                <div class="container">
-                                                    <div class="row">
-                                                        <div class="col-10">
-                                                            <h2 class="modal-title fw-bolder" id="exampleModalLabel">Thông tin cá nhân</h2>
-                                                        </div>
-                                                        <div class="col-2 align-items-center text-center d-flex">
-                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="modal-body border-bottom-0">
-                                                <div class="container">
-                                                        <div class="row g-2 mb-3">
-                                                            <div class="col">
-                                                                <div class="form-floating">
-                                                                    <input type="text" class="form-control border-dark" id="firstName" name="firstName" value="" required>
-                                                                    <label for="firstName" class="form-label">Họ</label>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col">
-                                                                <div class="form-floating">
-                                                                <input type="cvc" class="form-control border-dark" required id="lastName" name="lastName" placeholder="" value="">
-                                                                <label for="lastName">Tên</label>
-                                                                </div>
-                                                            </div>
-                                                            </div>
-                                                        <div class="row mb-3">
-                                                            <div class="col">
-                                                                <div class="form-floating">
-                                                                    <input type="number" class="form-control border-dark" required id="phoneNumber" name="phoneNumber" placeholder="" value="">
-                                                                    <label for="phoneNumber">SĐT</label>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="row mb-3">
-                                                            <!-- <div class="col">
-                                                                <div class="form-floating border-dark">
-                                                                <select class="form-select border-dark" id="floatinginput-country">
-                                                                    <option value="Hue" selected>Hue</option>
-                                                                    <option value="Quang Nam">Quang Nam</option>
-                                                                    <option value="Ho Chi Minh">Ho Chi Minh </option>
-                                                                </select>
-                                                                <label for="floatingSelectGrid">Quê quán</label>
-                                                                </div>
-                                                            </div> -->
-                                                            <div class="col">
-                                                                <div class="form-floating">
-                                                                <input type="cvc" class="form-control border-dark" required id="address" name="address" placeholder="" value="" required>
-                                                                <label for="address">Địa chỉ</label>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="row">
-                                                        <div class="col">
-                                                                <div class="form-floating">
-                                                                <input type="date" class="form-control border-dark" required id="Dob" name="dob" placeholder="" value="" required>
-                                                                <label for="Dob">Ngày sinh</label>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="row">
-                                                            <div class="col">
-                                                                <input type="checkbox" name="" required id="checkbox"> Securely save my information for 1-click checkout
-                                                                <label for="checkbox"></label>
-                                                            </div>
-                                                        </div>
-                                                </div>
-                                            </div>
-                                            <div class="modal-footer border-bottom-0 border-top-0">
-                                                <div class="container">
-                                                    <div class="row"></div>
-                                                    <div class="col mb-2">
-                                                        <!-- <form action="../booking-dt/booking-dt.php" method="post"> -->
-                                                            <button type="submit" name="addinfo" id="" class="btn btn-outline-success p-2" style="background-color:#8DD3BB; border: #8DD3BB; color: black;width: 100%;">Lưu thông tin</button>
-                                                            <!-- <script src="functions.js"></script> -->
-                                                    </div>
-                                                    <div class="col">
-                                                        <p class="text-center" style="font-size: 10px;">By confirming your subscription, you allow The Outdoor Inn Crowd Limited to charge your card for this payment and future payments in accordance with their terms. You can always cancel your subscription.</p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </form>
 
-    {{!--  --}}
+    {{!-- --}}
     <div class="row mb-5 mt-5">
         <img class=" p-0 w-100" style="border-radius: 12px;" src="../../images/flight-detail/plane-flight-detail.svg"
             alt="flight-detail">
     </div>
 
-    {{!--  --}}
+    {{!-- --}}
     <div class="row mb-3 choose-heading">
         <div class="col-12 col-md-12 col-lg-6 ps-4">
             <h2 class="fw-bold">Basic Economy Feature</h2>
@@ -390,5 +276,12 @@
             </div>
         </div>
     </div>
-
 </div>
+<script>
+    if ("{{user}}") {
+        $("#bookFlight").attr("data-bs-toggle", "");
+        $("#bookFlight").attr("type", "submit");
+        $("#formBookNow").attr("action", "../payment-booking");
+
+    }
+</script>

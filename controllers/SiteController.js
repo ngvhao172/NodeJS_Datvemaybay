@@ -33,22 +33,27 @@ class SiteController {
     }
     async showPaymentBooking(req, res, next){
         const flightData = JSON.parse(req.body.flightData);
-        const passengerInfo = JSON.parse(req.body.passengerInfo);
-        // console.log(flightData)
-        // console.log(passengerInfo)
-        // if(req.session.user){
-        //   const user = JSON.parse(req.session.user);
-        //   res.render("pages/client/booking-detail", {flightData, passengerInfo,user});
-        // }
-        // else{
-        //   res.render("pages/client/booking-detail", {flightData, passengerInfo});
-        // }
+        let passengerInfo;
+        if(req.body.passengerInfo){
+           passengerInfo = JSON.parse(req.body.passengerInfo);
+        }
+        else{
+           passengerInfo = null
+           let seatNoValue = JSON.parse(req.body.seatNo);
+           flightData.seatNo = seatNoValue;
+        }
         const user = await req.user;
         res.render("pages/client/booking-detail", {flightData, passengerInfo, user: mongooseToObject(user)});
     }
     async showTicket(req,res,next){
       const flightData = JSON.parse(req.body.flightData);
-      const passengerInfo = JSON.parse(req.body.passengerInfo);
+        let passengerInfo;
+        if(req.body.passengerInfo){
+          passengerInfo = JSON.parse(req.body.passengerInfo);
+        }
+        else{
+          passengerInfo = null
+        }
       const user = await req.user;
       res.render('pages/client/ticket-info', {flightData, passengerInfo, user: mongooseToObject(user)});
     }

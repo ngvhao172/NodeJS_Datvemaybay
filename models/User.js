@@ -10,6 +10,7 @@ const User = new Schema({
     phonenumber: String,
     address: String,
     dob: Date,
+    picture: String,
     verified: Boolean
 });
 

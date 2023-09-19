@@ -3,6 +3,11 @@ module.exports = {
         return mongooses.map(mongoose => mongoose.toObject());
     },
     mongooseToObject: (mongoose) => {
-        return mongoose ? mongoose.toObject() : mongoose;
+        try{
+            return mongoose ? mongoose.toObject() : mongoose;
+        }
+        catch(e){
+            return mongoose;
+        }     
     } 
 }

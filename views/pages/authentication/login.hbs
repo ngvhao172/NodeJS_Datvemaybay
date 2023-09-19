@@ -65,6 +65,13 @@
                                 <strong>Failed!</strong> {{messages.error}}
                             </div>
                             {{/if}}
+                            {{#if success}}
+                            <div class="alert alert-success alert-dismissible">
+                                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                                <strong>Sucesss!</strong> {{success}}
+                            </div>
+                            {{/if}}
+
 
 
                             <div class="form-outline mb-4">
@@ -101,11 +108,10 @@
                             </div>
 
                             <p class="text-center" style="margin-bottom: 15px;">Don't have an account? <a
-                                    href="signup.php">Register here</a> </p>
+                                    href="/register">Register here</a> </p>
 
-                            <div class="btn-login btn btn-lg btn-block w-100" style="background-color: #8DD3BB;"
-                                onclick="document.getElementById('google_login').click()">
-                                <a style="color:black;" id="google_login" href="" style="color:black;">
+                            <div class="btn-login btn btn-lg btn-block w-100" style="background-color: #8DD3BB;">
+                                <a style="color:black;" id="google_login" href="/auth/google" style="color:black;">
                                     Login with Google <i class='fab fa-google'></i>
                                 </a>
                             </div>

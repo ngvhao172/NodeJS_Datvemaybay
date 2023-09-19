@@ -11,16 +11,14 @@ async function initializeGooglePassport(passport) {
     },
     async function (request, accessToken, refreshToken, profile, done) {
         const user = await userController.getUserByEmail(profile.email);
-
         if (user) {
             return done(null, user);
         } else {
-            console.log(profile);
             const newUser = {
                 email: profile.email, 
                 last_name: profile.name.familyName, 
                 first_name: profile.name.givenName, 
-                password: null, 
+                password: await bcrypt.hash("1",10), 
                 phonenumber: null, 
                 address: null, 
                 dob: null,

@@ -21,7 +21,7 @@ class UserService{
                 throw error;
             });
     }
-    getUserById(id){
+    async getUserById(id){
         return User.findById(id)
            .then((user) => {
                 return mongooseToObject(user);
@@ -56,6 +56,15 @@ class UserService{
     }
     async updateUserStatus(userID){
         return await User.findByIdAndUpdate(userID, { verified: true }, { new: true })
+        .then((user)=>{
+            return mongooseToObject(user);
+        })
+        .catch((error)=>{
+            console.log(error);
+        })
+    }
+    async updateUserPassword(userID, password){
+        return await User.findByIdAndUpdate(userID, { password }, { new: true })
         .then((user)=>{
             return mongooseToObject(user);
         })

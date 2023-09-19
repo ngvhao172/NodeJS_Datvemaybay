@@ -18,7 +18,20 @@ route.post('/register', authenticationController.registerNewUser);
 
 route.post('/logout', authenticationController.logout);
 
+// verify user via email
 route.get('/verify/:userID/:uniqueString', authenticationController.verifyUser);
+
+// reset psd via email
+route.get('/changepassword/:userID/:uniqueString', authenticationController.showChangePassword);
+
+// reset psd via email
+route.post('/changepassword/:userID/:uniqueString', authenticationController.changePassword);
+
+// forgot password
+route.get('/forgotpassword', authenticationController.showforgotPassword);
+route.post('/forgotpassword', authenticationController.forgotPassword);
+
+
 
 // GG login
 

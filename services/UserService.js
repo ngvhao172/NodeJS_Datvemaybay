@@ -30,7 +30,7 @@ class UserService{
                 throw error;
             });
     }
-    createUser(email, last_name, first_name, password, phonenumber, address, dob, res) {
+    async createUser(email, last_name, first_name, password, phonenumber, address, dob, res) {
         const newUser = new User({ email, last_name, first_name, password, phonenumber, address, dob, verified: false });
       
         return newUser.save()
@@ -43,7 +43,7 @@ class UserService{
             throw err;
           });
     }
-    createUserGG(newUser){
+    async createUserGG(newUser){
         const newUser1 = new User(newUser);
         return newUser1.save()
          .then((result) => {

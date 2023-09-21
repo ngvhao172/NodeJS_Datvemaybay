@@ -1,7 +1,7 @@
 const bcrypt = require('bcrypt');
 const userVerification = require('../services/UserVerificationService');
 const userService = require('../services/UserService');
-const UserVerificationService = require('../services/UserVerificationService');
+const userVerificationService = require('../services/UserVerificationService');
 class Authentication {
 
     showLoginPage(req, res, next) {
@@ -18,10 +18,15 @@ class Authentication {
             // check if user exists already
             const user = await userService.getUserByEmail(email);
             if (user) {
-                res.render('pages/authentication/register', {
-                    layout: null,
-                    error: "Email already exists"
-                });
+                if(!user.verified) {
+                    userVerificationService.sendVerificationEmail(user, res);
+                }
+                else{
+                    res.render('pages/authentication/register', {
+                        layout: null,
+                        error: "Email already exists."
+                    });
+                }
             }
             else {
                 const hashedPassword = await bcrypt.hash(password, 10);
@@ -69,7 +74,19 @@ class Authentication {
                 const { expiredAt, uniqueString: hashedUniqueString } = user;
                 // Handle the case where verification has expired
                 if (expiredAt < Date.now()) {
-                    userVerification.delUserVerification(userID);
+                    userVerification.delUserVerification(userID, res)
+                    // return;
+                    .then((result)=> {
+                        if(result.status==200){
+                            res.render('../views/pages/authentication/403.hbs', { layout: null, error: res.message});
+                        }
+                        else{
+                            res.render('../views/pages/authentication/403.hbs', { layout: null, error: res.message});
+                        }
+                    })
+                    .catch((error)=>{
+                        res.render('../views/pages/authentication/403.hbs', { layout: null, error: error.message});
+                    });
                 } else {
                     const result = await bcrypt.compare(uniqueString, hashedUniqueString);
                     if (result) {
@@ -106,20 +123,20 @@ class Authentication {
         res.render('../views/pages/authentication/forgotpassword.hbs', { layout: null });
     }
     async forgotPassword(req, res, next) {
+        if(!req.body.email){
+            res.render('../views/pages/authentication/forgotpassword.hbs', {layout: null, error: "Bạn chưa nhập email."} );
+        }
         const user = await userService.getUserByEmail(req.body.email);
         if (user) {
             if (user.verified) {
-                    await userVerification.sendCodeResetPassword(user, res)
-                    res.render('../views/pages/authentication/forgotpassword.hbs', { layout: null, success: "Request has been sent into your email." });
-                    // .then((result) => {
-                    //     if(result.status == 200){
-                    //         res.render('../views/pages/authentication/forgotpassword.hbs', {layout: null, success: "Request has been sent into your email."} );
-                    //     }
-                    // })
+                    const result = await userVerification.sendCodeResetPassword(user);
+                    if(result.status == 200){
+                        res.render('../views/pages/authentication/forgotpassword.hbs', {layout: null, success: result.message} );
+                    }
+                    else{
+                        res.render('../views/pages/authentication/forgotpassword.hbs', {layout: null, error: result.message} );
+                    }
                 }
-                // else {
-                //     res.render('../views/pages/authentication/forgotpassword.hbs', { layout: null, error: "You have sent request before. Please check your email address" });
-                // }
             else {
                 res.render('../views/pages/authentication/forgotpassword.hbs', { layout: null, error: "Please verify your account first." });
             }
@@ -141,7 +158,18 @@ class Authentication {
                 const { expiredAt, uniqueString: hashedUniqueString } = userVerify;
                 // Handle the case where verification has expired
                 if (expiredAt < Date.now()) {
-                    userVerification.delUserVerification(userID);
+                    userVerification.delUserVerification(userID, res)
+                    .then((result)=> {
+                        if(result.status==200){
+                            res.render('../views/pages/authentication/403.hbs', { layout: null, error: res.message});
+                        }
+                        else{
+                            res.render('../views/pages/authentication/403.hbs', { layout: null, error: res.message});
+                        }
+                    })
+                    .catch((error)=>{
+                        res.render('../views/pages/authentication/403.hbs', { layout: null, error: error.message});
+                    });
                 } else {
                     const result = await bcrypt.compare(uniqueString, hashedUniqueString);
                     if (result) {
@@ -150,19 +178,19 @@ class Authentication {
                         const userUpdated = await userService.updateUserPassword(userID, hashedNewPassword);
                         if (userUpdated) {
                             await userVerification.delUserVerification(userID, res);
-                            res.render('../views/pages/authentication/changepassword.hbs', { layout: null, success: "Change password successfully" });
+                            res.render('../views/pages/authentication/changepassword.hbs', { layout: null, success: `Change password successfully. Login <a href="localhost:${process.env.PORT}/login">here</a>` });
                         }
                         else {
-                            res.render('../views/pages/authentication/changepassword.hbs', { layout: null, error: "Invalid. There was an error" });
+                            res.render('../views/pages/authentication/changepassword.hbs', { layout: null, error: "There was an error"});
                         }
                     }
                     else {
-                        res.render('../views/pages/authentication/changepassword.hbs', { layout: null });
+                        res.render('../views/pages/authentication/changepassword.hbs', { layout: null, error: "This link is invalid"});
                     }
                 }
             }
             else {
-                res.render('../views/pages/authentication/changepassword.hbs', { layout: null });
+                res.render('../views/pages/authentication/changepassword.hbs', { layout: null, error: "No userverification was found."});
             }
         } catch (error) {
             console.error(error);

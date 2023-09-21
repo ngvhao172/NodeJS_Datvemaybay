@@ -29,6 +29,7 @@ route.post('/changepassword/:userID/:uniqueString', authenticationController.cha
 
 // forgot password
 route.get('/forgotpassword', authenticationController.showforgotPassword);
+
 route.post('/forgotpassword', authenticationController.forgotPassword);
 
 

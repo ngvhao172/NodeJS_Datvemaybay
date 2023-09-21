@@ -14,16 +14,16 @@ class UserVerificationService{
             console.log(error);
         })
     }
-    async delUserVerification(userID, res){
-        userVerification.deleteOne({userID})
-        .then(()=>{
-            // res.json({status: 200, message: "Deleted UserVerification successful"});
-            console.log("Deleted userVerification successful")
-        })
-        .catch((error)=>{
-            console.log(error);
-        })
+    async delUserVerification(userID) {
+        try {
+            await userVerification.deleteOne({ userID });
+            return { status: 200, message: "Deleted UserVerification successful." };
+        } catch (error) {
+            return { status: 400, message: "There was an error while deleting the UserVerification." };
+        }
     }
+    
+    
     
     // sending mail register using nodemailer
     
@@ -57,46 +57,42 @@ class UserVerificationService{
             })
             newUserVerification
                 .save()
-                .then(()=>{
-                    transporter.sendMail(mailOptions)
-                    .then(()=>{
+                .then(async ()=>{
+                    try{
+                        await transporter.sendMail(mailOptions);
                         console.log(`Verification mail has been sent to ${mailOptions.to}`);
-                        // res.json({
-                        //     status: "Pending",
-                        //     message: "Verification mail has been sent"
-                        // })
                         res.render('pages/authentication/login', {
                             layout: null,
                             success: "An email has been sent into your email address. Please verify before login."
-                        });                        
-                    })
-                    .catch((error)=>{
-                        console.log(error)
-                        res.json({
+                        });     
+                    }
+                    catch{
+                        return ({
                             status: "FAILED",
                             message: "An error occurred while sending email."
                         })
+                    }
+                
                     })
                 })
                 .catch((error)=>{
-                    console.log(error)
-                    res.json({
+                    console.log(error);
+                    return ({
                         status: "FAILED",
-                        message: "An error occurred while insert new verification."
+                        message: "An error occurred while sending email."
                     })
                 })
-        })
         .catch((error)=>{
-            console.log(error)
-            res.json({
+            console.log(error);
+            return ({
                 status: "FAILED",
-                message: "An error occurred while hasing email data."
+                message: "An error occurred while sending email."
             })
         })
     }
 
     // sending mail resetpassword using nodemailer
-     sendCodeResetPassword = async ({_id, email}, res) =>{
+    sendCodeResetPassword = async ({ _id, email }) => {
         const transporter = nodemailer.createTransport({
             service: "gmail",
             auth: {
@@ -114,49 +110,33 @@ class UserVerificationService{
             html: `<p>We've processed your password change request. If it is you who sent this request, click on the link below to change your password.</p>
             <p>Press <a href=${currentUrl + "/changepassword/" + _id + "/" + uniqueString}> here </a> to proceed. </p>`
         };
+        
         const userVerificationData = await this.findByUserId(_id);
-        if(!userVerificationData){
-            bcrypt
-            .hash(uniqueString, 10)
-            .then((hasedUniqueString) => {
+    
+        if (!userVerificationData) {
+            try {
+                const hashedUniqueString = await bcrypt.hash(uniqueString, 10);
                 const newUserVerification = new userVerification({
                     userID: _id,
-                    uniqueString: hasedUniqueString,
+                    uniqueString: hashedUniqueString,
                     createdAt: Date.now(),
                     expiredAt: Date.now() + 21600000
-                })
-                newUserVerification
-                    .save()
-                    .then(async ()=>{
-                        transporter.sendMail(mailOptions)
-                            .then(() => {
-                                console.log(`Password request mail has been sent to ${mailOptions.to}`);
-                                // return { status: 200, message: "Verification mail has been sent" };
-                            })
-                        })
-                        .catch((error)=>{
-                            console.log(error)
-                            // res.json({
-                            //     status: "FAILED",
-                            //     message: "An error occurred while sending email."
-                            // })
-                            return { status: 400, message: "An error occurred while sending email." };
-                        })
-                    })
-                    .catch((error)=>{
-                        console.log(error)
-                        return {status: 400,message: "An error occurred while insert new verification."};
-                    })
-            .catch((error)=>{
-                console.log(error)
-               return {status: 400, message: "An error occurred while hasing email data."};
-            })
+                });
+    
+                await newUserVerification.save();
+                await transporter.sendMail(mailOptions);
+                console.log(`Password request mail has been sent to ${mailOptions.to}`);
+                
+                return { status: 200, message: `Password reset mail has been sent to ${mailOptions.to}.` };
+            } catch (error) {
+                console.error(error);
+                return { status: 500, message: "An error occurred while processing the request." };
+            }
+        } else {
+            return { status: 400, message: "You have sent a request before. Please check your email address." };
         }
-        else{
-            //res.render('../views/pages/authentication/forgotpassword.hbs', { layout: null, error: "You have sent request before. Please check your email address" });
-            console.log("You have sent request before. Please check your email address")
-        } 
     }
+    
 }
 
 
